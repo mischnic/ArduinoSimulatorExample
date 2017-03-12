@@ -1,0 +1,3 @@
+[submodule "ArduinoSimulator"]
+	path = ArduinoSimulator
+	url = https://github.com/mischnic/ArduinoSimulator
