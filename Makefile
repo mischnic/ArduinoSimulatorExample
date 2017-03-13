@@ -2,8 +2,8 @@ CXX = clang++
 
 CPPFLAGS = -I./ArduinoSimulator -I./ArduinoSimulator/core
 
-sim:  Sketch.ino.o ArduinoSimulator/libArduinoSimulator.dylib
-	$(CXX) -Wno-\#warnings -o sim Sketch.ino.o -L./ArduinoSimulator -lArduinoSimulator -DIS_SIM
+sim:  Sketch.o ArduinoSimulator/libArduinoSimulator.dylib
+	$(CXX) -Wno-\#warnings -o sim $< -L./ArduinoSimulator -lArduinoSimulator -DIS_SIM
 	ln -sf ArduinoSimulator/libArduinoSimulator.dylib libArduinoSimulator.dylib
 
 .PHONY: run
@@ -12,7 +12,7 @@ run: sim
 
 .PHONY: clean
 clean:
-	rm -f sim Sketch.ino.o
+	rm -f sim Sketch.o
 
 .PHONY: rebuild
 rebuild: clean
@@ -21,3 +21,6 @@ rebuild: clean
 
 ArduinoSimulator/libArduinoSimulator.dylib:
 	$(MAKE) -C ./ArduinoSimulator libArduinoSimulator.dylib
+
+%.o : %.ino
+	$(CXX) -x c++ $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<
