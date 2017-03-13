@@ -23,9 +23,27 @@
 #include "Sketch.h"
 
 
-void getState(Data *d, int id){
+int count = 0;
 
+
+void getState(Data *d, int id){
+	if(id == 1){
+		strcpy(d->desc, "counter");
+		d->value = count;
+	} else if(id == 0){
+		d->value = 1;
+	}
+
+	id -= 100;
+	if(id == -1){
+		strcpy(d->desc, "VCC");
+		d->value = (int) (5.0f * 1000.0f);
+	}else if(id == 1){
+		strcpy(d->desc, "BLINKY");
+	}
 }
+
+
 
 
 // the setup function runs once when you press reset or power the board
@@ -40,4 +58,5 @@ void loop() {
   delay(1000);                       // wait for a second
   digitalWrite(1, LOW);    // turn the LED off by making the voltage LOW
   delay(1000);                       // wait for a second
+  count++;
 }
