@@ -27,19 +27,23 @@ int count = 0;
 
 
 void getState(Data *d, int id){
-	if(id == 1){
-		strcpy(d->desc, "counter");
-		d->value = count;
-	} else if(id == 0){
-		d->value = 1;
+	if(id & DATA_INFO){
+		if((id & DATA_MASK) == 0){
+			// strcpy(d->desc, "VCC");
+			d->value = (int) (5.0f * 1000.0f);
+		} else if((id & DATA_MASK) == 1){
+			strcpy(d->desc, "counter");
+			d->value = count;
+		} else {
+			strcpy(d->desc, "!!END");
+		}
+		// count
 	}
 
-	id -= 100;
-	if(id == -1){
-		strcpy(d->desc, "VCC");
-		d->value = (int) (5.0f * 1000.0f);
-	}else if(id == 1){
-		strcpy(d->desc, "BLINKY");
+	if(id & DATA_PIN){
+		if((id & DATA_MASK) == 1){
+			strcpy(d->desc, "BLINKY");
+		}
 	}
 }
 
@@ -48,15 +52,15 @@ void getState(Data *d, int id){
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-    // initialize digital pin LED_BUILTIN as an output.
-    pinMode(1, OUTPUT);
+	// initialize digital pin LED_BUILTIN as an output.
+	pinMode(1, OUTPUT);
 }
 
 // the loop function runs over and over again forever
 void loop() {
-    digitalWrite(1, HIGH);   // turn the LED on (HIGH is the voltage level)
-    delay(1000);                       // wait for a second
-    digitalWrite(1, LOW);    // turn the LED off by making the voltage LOW
-    delay(1000);                       // wait for a second
-    count++;
+	digitalWrite(1, HIGH);   // turn the LED on (HIGH is the voltage level)
+	delay(1000);                       // wait for a second
+	digitalWrite(1, LOW);    // turn the LED off by making the voltage LOW
+	delay(1000);                       // wait for a second
+	count++;
 }
