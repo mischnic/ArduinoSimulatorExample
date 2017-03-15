@@ -34,10 +34,7 @@ void getState(Data *d, int id){
 		} else if((id & DATA_MASK) == 1){
 			strcpy(d->desc, "counter");
 			d->value = count;
-		} else {
-			strcpy(d->desc, "!!END");
 		}
-		// count
 	}
 
 	if(id & DATA_PIN){
