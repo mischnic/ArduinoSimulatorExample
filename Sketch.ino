@@ -1,4 +1,6 @@
-#include "Sketch.h"
+#if IS_SIM
+	#include "Sketch.h"
+#endif
 #include "SoftwareSerial.h"
 
 int count = 0;
